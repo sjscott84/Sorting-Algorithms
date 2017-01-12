@@ -6,15 +6,16 @@ public class AlgorithmTest {
 	
 	public int[] array;
 	public int[] tempArray;
+	public int arrayLength = 10;
 	
 	public AlgorithmTest(){
-		array = new int[10];
+		array = new int[arrayLength];
 	}
 	
 	public int[] buildArray(){
-		int[] newArray = new int[10];
-		for(int i = 0; i < array.length; i++){
-			int random = (int )(Math.random() * 10 + 1);
+		int[] newArray = new int[arrayLength];
+		for(int i = 0; i < arrayLength; i++){
+			int random = (int )(Math.random() * arrayLength + 1);
 			newArray[i] = random;
 		}
 		return newArray;
@@ -61,7 +62,7 @@ public class AlgorithmTest {
 	}
 	
 	public void mergeSort(int lowIndex, int highIndex){
-		System.out.println(lowIndex+" "+highIndex);
+		//System.out.println(lowIndex+" "+highIndex);
 		if(lowIndex < highIndex){
 			int middle = lowIndex + (highIndex - lowIndex)/2;
 			mergeSort(lowIndex, middle);
@@ -99,9 +100,9 @@ public class AlgorithmTest {
 		AlgorithmTest test = new AlgorithmTest();
 		int[] testArray = test.buildArray();
 		System.out.println("Original "+Arrays.toString(testArray));
-		//test.selectionSort(testArray);
+		test.selectionSort(testArray);
 		//test.insertionSort(testArray);
-		test.mergeSortSetup(testArray);
+		//test.mergeSortSetup(testArray);
 		System.out.println("Sorted "+Arrays.toString(testArray));
 	}
 
