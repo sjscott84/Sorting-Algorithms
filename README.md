@@ -12,8 +12,8 @@ Algorithms currently included:
 * Selection Sort
 * Insertion Sort
 * Merge Sort
-* Quick Sort
+* Deterministic Quick Sort
+* Randomized Quick Sort
 
 ##TODO
 * Add some benchmarking to see how fast each of the methods runs
-* Break Quick Sort into random and deterministic
