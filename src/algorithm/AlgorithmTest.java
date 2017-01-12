@@ -21,6 +21,7 @@ public class AlgorithmTest {
 		return newArray;
 	}
 	
+	//Selection sort method
 	public int[] selectionSort(int[] toSort){
 		int[] sorted = toSort;
 		for(int i = 0; i < sorted.length; i++){
@@ -38,6 +39,7 @@ public class AlgorithmTest {
 		return sorted;
 	}
 	
+	//Insertion Sort Method
 	public int[] insertionSort (int[] toSort){
 		int[] sorted = toSort;
 		int current;
@@ -53,7 +55,7 @@ public class AlgorithmTest {
 		return sorted;
 	}
 
-	//Save the array to be sorted and create a temporary array
+	//Merge sort methods (3 in total)
 	public void mergeSortSetup(int[] arrayToSort){
 		this.array = arrayToSort;
 		this.tempArray = new int[arrayToSort.length];
@@ -96,13 +98,44 @@ public class AlgorithmTest {
 		}	
 	}
 	
+	//Quick Sort Methods (3 in total)
+	public void quickSortSetup(int[] arrayToSort){
+		this.array = arrayToSort;
+		quickSort(0, arrayToSort.length - 1);
+	}
+	
+	public void quickSort(int lowIndex, int highIndex){
+		if(lowIndex < highIndex){
+			int partition = partition(lowIndex, highIndex);
+			quickSort(lowIndex, partition - 1);
+			quickSort(partition + 1, highIndex);
+		}
+	}
+	
+	public int partition(int lowIndex, int highIndex){
+		int p = lowIndex;
+		for(int i = lowIndex; i < highIndex; i++){
+			if(this.array[i] < this.array[highIndex]){
+				int temp = this.array[p];
+				this.array[p] = this.array[i];
+				this.array[i] = temp;
+				p++;
+			}
+		}
+		int nextTemp = this.array[p];
+		this.array[p] = this.array[highIndex];
+		this.array[highIndex] = nextTemp;
+		return p;
+	}
+	
 	public static void main(String[] args){
 		AlgorithmTest test = new AlgorithmTest();
 		int[] testArray = test.buildArray();
 		System.out.println("Original "+Arrays.toString(testArray));
-		test.selectionSort(testArray);
+		//test.selectionSort(testArray);
 		//test.insertionSort(testArray);
 		//test.mergeSortSetup(testArray);
+		test.quickSortSetup(testArray);
 		System.out.println("Sorted "+Arrays.toString(testArray));
 	}
 
