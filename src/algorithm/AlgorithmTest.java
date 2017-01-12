@@ -98,12 +98,17 @@ public class AlgorithmTest {
 		}	
 	}
 	
-	//Quick Sort Methods (3 in total)
-	public void quickSortSetup(int[] arrayToSort){
+	//Quick Sort Methods (4 in total including a helper method swap)
+	public void quickSortSetup(int[] arrayToSort, boolean random){
 		this.array = arrayToSort;
-		quickSort(0, arrayToSort.length - 1);
+		if(!random){
+			quickSort(0, arrayToSort.length - 1);
+		}else{
+			randomQuickSort(0, arrayToSort.length - 1);
+		}
 	}
 	
+	//Deterministic quick sort
 	public void quickSort(int lowIndex, int highIndex){
 		if(lowIndex < highIndex){
 			int partition = partition(lowIndex, highIndex);
@@ -116,16 +121,43 @@ public class AlgorithmTest {
 		int p = lowIndex;
 		for(int i = lowIndex; i < highIndex; i++){
 			if(this.array[i] < this.array[highIndex]){
-				int temp = this.array[p];
-				this.array[p] = this.array[i];
-				this.array[i] = temp;
+				swap(p, i);
 				p++;
 			}
 		}
-		int nextTemp = this.array[p];
-		this.array[p] = this.array[highIndex];
-		this.array[highIndex] = nextTemp;
+		swap(p, highIndex);
 		return p;
+	}
+	
+	//Random quick sort
+	public void randomQuickSort(int lowIndex, int highIndex){
+		if(lowIndex < highIndex){
+			int partition = randomPartition(lowIndex, highIndex);
+			quickSort(lowIndex, partition - 1);
+			quickSort(partition + 1, highIndex);
+		}
+	}
+	
+	public int randomPartition(int lowIndex, int highIndex){
+		int p = lowIndex;
+		int random = (int )(Math.random() * (highIndex-lowIndex) + lowIndex);
+		int pivotValue = this.array[random];
+		swap(random, highIndex);
+		for(int i = lowIndex; i < highIndex; i++){
+			if(this.array[i] < pivotValue){
+				swap(p, i);
+				p++;
+			}
+		}
+		swap(highIndex, p);
+		return p;
+	}
+	
+	//Helper method
+	public void swap(int first, int second){
+		int temp = this.array[first];
+		this.array[first] = this.array[second];
+		this.array[second] = temp;
 	}
 	
 	public static void main(String[] args){
@@ -135,7 +167,10 @@ public class AlgorithmTest {
 		//test.selectionSort(testArray);
 		//test.insertionSort(testArray);
 		//test.mergeSortSetup(testArray);
-		test.quickSortSetup(testArray);
+		//Deterministic Quick Sort
+		//test.quickSortSetup(testArray, false);
+		//Randomized Quick Sort
+		test.quickSortSetup(testArray, true);
 		System.out.println("Sorted "+Arrays.toString(testArray));
 	}
 
