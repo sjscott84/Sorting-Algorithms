@@ -17,3 +17,4 @@ Algorithms currently included:
 
 ##TODO
 * Add some benchmarking to see how fast each of the methods runs
+* Potentially add timesort
