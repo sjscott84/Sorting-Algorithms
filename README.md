@@ -14,7 +14,7 @@ Algorithms currently included:
 * Merge Sort
 * Deterministic Quick Sort
 * Randomized Quick Sort
+* Counting Sort
 
 ##TODO
-* Add some benchmarking to see how fast each of the methods runs
 * Potentially add timesort
