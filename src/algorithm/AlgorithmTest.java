@@ -6,17 +6,29 @@ public class AlgorithmTest {
 	
 	public int[] array;
 	public int[] tempArray;
-	public int arrayLength = 10;
+	public static int arrayLength = 20;
 	
 	public AlgorithmTest(){
 		array = new int[arrayLength];
 	}
 	
+	//Build a random array
 	public int[] buildArray(){
 		int[] newArray = new int[arrayLength];
 		for(int i = 0; i < arrayLength; i++){
 			int random = (int )(Math.random() * arrayLength + 1);
 			newArray[i] = random;
+		}
+		return newArray;
+	}
+	
+	//Build a worst case array (sorted back to front) for benchmarking
+	public int[] buildWorstArray(){
+		int[] newArray = new int[arrayLength];
+		int value = arrayLength;
+		for(int i = 0; i < arrayLength; i++){
+			newArray[i] = value;
+			value--;
 		}
 		return newArray;
 	}
@@ -133,8 +145,8 @@ public class AlgorithmTest {
 	public void randomQuickSort(int lowIndex, int highIndex){
 		if(lowIndex < highIndex){
 			int partition = randomPartition(lowIndex, highIndex);
-			quickSort(lowIndex, partition - 1);
-			quickSort(partition + 1, highIndex);
+			randomQuickSort(lowIndex, partition - 1);
+			randomQuickSort(partition + 1, highIndex);
 		}
 	}
 	
@@ -160,6 +172,60 @@ public class AlgorithmTest {
 		this.array[second] = temp;
 	}
 	
+	private int[] countingSort (int[] input, int highNum){
+		//Initilase a new array with all elements being 0
+		int[] count = new int [highNum + 1];
+		int[] result = new int[highNum];
+		for (int i=0; i<highNum; i++){
+            count[i] = 0;
+		};
+		
+		//Store a count of each value in the input array
+		for (int i = 0; i < input.length; i++){
+			int x = count[input[i]];
+			x++;
+			count[input[i]] = x;
+		}
+		
+		//Count all values together
+		for(int i = 1; i < count.length; i++){
+			count[i] = count[i] + count[i-1];
+		}
+		
+		//update result
+		for(int i = 0; i < input.length; i++){
+			result[count[input[i]]-1] = input[i];
+			count[input[i]]--;
+		}
+		
+		return result;
+	}
+	
+	private void benchmark(){
+		//AlgorithmTest test = new AlgorithmTest();
+		int count = 0;
+		float totalTime = 0;
+		while(count < 100){
+			//int[] testArray = buildArray();
+			int[] testArray = buildWorstArray();
+			//System.out.println("Original "+Arrays.toString(testArray));
+			long startTime = System.nanoTime();
+			//selectionSort(testArray);
+			//insertionSort(testArray);
+			//mergeSortSetup(testArray);
+			////Deterministic Quick Sort
+			quickSortSetup(testArray, false);
+			////Randomized Quick Sort
+			//quickSortSetup(testArray, true);
+			long endTime = System.nanoTime();
+			//System.out.println("Sorted "+Arrays.toString(testArray));
+			float estTime = (endTime - startTime)/1000000000f;
+			totalTime = totalTime + estTime;
+			count++;
+		}
+		System.out.println(totalTime/count);
+	}
+	
 	public static void main(String[] args){
 		AlgorithmTest test = new AlgorithmTest();
 		int[] testArray = test.buildArray();
@@ -167,11 +233,13 @@ public class AlgorithmTest {
 		//test.selectionSort(testArray);
 		//test.insertionSort(testArray);
 		//test.mergeSortSetup(testArray);
-		//Deterministic Quick Sort
+		////Deterministic Quick Sort
 		//test.quickSortSetup(testArray, false);
-		//Randomized Quick Sort
-		test.quickSortSetup(testArray, true);
+		////Randomized Quick Sort
+		//test.quickSortSetup(testArray, true);
+		testArray = test.countingSort(testArray, arrayLength);
 		System.out.println("Sorted "+Arrays.toString(testArray));
+		//test.benchmark();
 	}
 
 }
