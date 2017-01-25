@@ -4,7 +4,13 @@ import java.util.Arrays;
 
 public class AlgorithmTest {
 	
-	public static int arrayLength = 20;
+	public static int arrayLength = 100;
+	static CountingSort countingSort = new CountingSort();
+	static SelectionSort selectionSort = new SelectionSort();
+	static InsertionSort insertionSort = new InsertionSort();
+	static MergeSort mergeSort = new MergeSort();
+	static RandomQuickSort randomQuickSort = new RandomQuickSort();
+	static QuickSort quickSort = new QuickSort();
 	
 	//Build a random array
 	public int[] buildArray(){
@@ -27,19 +33,17 @@ public class AlgorithmTest {
 		return newArray;
 	}
 	
-	public void benchmark(){
+	public void benchmark(int[] arraytoSort){
 		int count = 0;
 		float totalTime = 0;
 		while(count < 100){
-			//int[] testArray = buildArray();
-			int[] testArray = buildWorstArray();
 			long startTime = System.nanoTime();
-			//testArray = countingSort.countingSort(testArray, arrayLength);
-			//testArray = selectionSort.selectionSort(testArray);
-			//testArray = insertionSort.insertionSort(testArray);
-			//testArray = mergeSort.mergeSortSetup(testArray);
-			//testArray = randomQuickSort.randomQuick(testArray);
-			//testArray = quickSort.quickSortSetup(testArray);
+			//countingSort.countingSort(arraytoSort, arrayLength);
+			//selectionSort.selectionSort(arraytoSort);
+			//insertionSort.insertionSort(arraytoSort);
+			//mergeSort.mergeSortSetup(arraytoSort);
+			//randomQuickSort.randomQuick(arraytoSort);
+			//quickSort.quickSortSetup(arraytoSort);
 			long endTime = System.nanoTime();
 			float estTime = (endTime - startTime)/1000000000f;
 			totalTime = totalTime + estTime;
@@ -50,22 +54,16 @@ public class AlgorithmTest {
 	
 	public static void main(String[] args){
 		AlgorithmTest test = new AlgorithmTest();
-		CountingSort countingSort = new CountingSort();
-		SelectionSort selectionSort = new SelectionSort();
-		InsertionSort insertionSort = new InsertionSort();
-		MergeSort mergeSort = new MergeSort();
-		RandomQuickSort randomQuickSort = new RandomQuickSort();
-		QuickSort quickSort = new QuickSort();
 		int[] testArray = test.buildArray();
 		System.out.println("Original "+Arrays.toString(testArray));
 		//testArray = countingSort.countingSort(testArray, arrayLength);
 		//testArray = selectionSort.selectionSort(testArray);
 		//testArray = insertionSort.insertionSort(testArray);
-		//testArray = mergeSort.mergeSortSetup(testArray);
+		testArray = mergeSort.mergeSortSetup(testArray);
 		//testArray = randomQuickSort.randomQuick(testArray);
-		testArray = quickSort.quickSortSetup(testArray);
+		//testArray = quickSort.quickSortSetup(testArray);
 		System.out.println("Sorted "+Arrays.toString(testArray));
-		//test.benchmark();
+		//test.benchmark(testArray);
 	}
 
 }
